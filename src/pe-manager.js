@@ -35,7 +35,7 @@ class ParternEngagementManager {
       let latestEngagements = await this.getEngagements();
       let newEngagements = this.compareEngagements(
         oldEngagements,
-        latestEngagements.slice(0, 4)
+        latestEngagements
       );
       oldEngagements = latestEngagements;
       cb(newEngagements);

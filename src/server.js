@@ -17,9 +17,30 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
+function sendPushNotificationsToClients(newEngagements) {
+  let newEngagementsCount = newEngagements.length || 0;
+
+  if (!newEngagementsCount) return;
+
+  let message = {
+    data: {
+      message: `${newEngagementsCount} new engagement${
+        newEngagementsCount > 1 ? 's' : ''
+      }`
+    },
+    topic
+  };
+
+  admin
+    .messaging()
+    .send(message)
+    .then(() => console.log('sent to devices'))
+    .catch(err => console.log('failed', err));
+}
+
 (() => {
   try {
-    peManager.monitor(console.log);
+    peManager.monitor(sendPushNotificationsToClients);
   } catch (error) {
     console.log('error', error);
   }
@@ -29,7 +50,6 @@ app.use(express.static('public'));
  * Gets client (browser) token after they grant notification permission
  * and subscribes them to a topic for future engagements
  */
-
 app.post('/api/token/subscribe', (req, res) => {
   const { token } = req.body;
 
