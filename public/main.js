@@ -13,15 +13,15 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 const messaging = firebase.messaging();
+const engagementsUrl = 'https://boards.greenhouse.io/partnerengagementstaffing';
 
 function updateUIForPermission(granted) {
   if (granted) {
     let html =
-      "You are on a roll!  Push notifications for new partner engagements will be sent to you. <br><strong>You don't have to visit this page to receive notifications 🙂</strong>";
-    document.querySelector('body').innerHTML = html;
+      "You are on a roll!  Push notifications for new partner engagements will be sent to you. <br><strong>P.S. You don't have to visit this page to receive notifications 🙂</strong>";
+    document.body.innerHTML = html;
   } else {
-    document.querySelector('body').textContent =
-      "Ok! I won't send you push notifications";
+    document.body.textContent = "Ok! I won't send you push notifications";
   }
 }
 
@@ -63,4 +63,13 @@ messaging.onTokenRefresh(() => {
     .catch(err => {
       console.log('Unable to retrieve refreshed token ', err);
     });
+});
+
+// called when there's incoming notification and app is in the foreground
+messaging.onMessage(payload => {
+  const {
+    data: { message }
+  } = payload;
+
+  document.body.innerHTML = `${message} <a href='${engagementsUrl}'>${engagementsUrl}</a>`;
 });
