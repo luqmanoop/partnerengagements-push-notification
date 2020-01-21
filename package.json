@@ -1,0 +1,32 @@
+{
+  "name": "partnerengagements-push-notification",
+  "version": "1.0.0",
+  "description": "Automated push notifications of latest partner engagements to Andelans",
+  "main": "index.js",
+  "dependencies": {
+
+  },
+  "devDependencies": {
+    "concurrently": "5.0.2",
+    "cpy-cli": "3.0.0",
+    "nodemon": "2.0.2",
+    "parcel-bundler": "1.12.4"
+  },
+  "scripts": {
+    "build": "cpy './serviceAccount.json' 'dist' && parcel build src/server.js --target node --no-cache",
+    "build:dev": "parcel src/server.js --target node --no-cache",
+    "dev": "nodemon --delay 1s dist --exec 'node ./dist/server.js'",
+    "start:dev": "npm run build && concurrently 'npm run build:dev' 'npm run dev'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codeshifu/partnerengagements-push-notification.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codeshifu/partnerengagements-push-notification/issues"
+  },
+  "homepage": "https://github.com/codeshifu/partnerengagements-push-notification#readme"
+}
