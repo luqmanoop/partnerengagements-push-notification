@@ -11,3 +11,26 @@ let firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
+
+const messaging = firebase.messaging();
+
+function updateUIForPermission(granted) {
+  if (granted) {
+    let html =
+      "You are on a roll!  Push notifications for new partner engagements will be sent to you. <br><strong>You don't have to visit this page to receive notifications 🙂</strong>";
+    document.querySelector('body').innerHTML = html;
+  } else {
+    document.querySelector('body').textContent =
+      "Ok! I won't send you push notifications";
+  }
+}
+
+messaging
+  .requestPermission()
+  .then(() => {
+    updateUIForPermission(true)
+  })
+  .catch(e => {
+    updateUIForPermission(false)
+    console.log('error', e);
+  });
