@@ -53,3 +53,14 @@ messaging
     updateUIForPermission(false);
     console.log('error', e);
   });
+
+messaging.onTokenRefresh(() => {
+  messaging
+    .getToken()
+    .then(refreshedToken => {
+      sendTokenToServer(refreshedToken);
+    })
+    .catch(err => {
+      console.log('Unable to retrieve refreshed token ', err);
+    });
+});
