@@ -17,21 +17,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
 
-(async () => {
+(() => {
   try {
-    let oldEngagements = await peManager.getEngagements();
-    
-    setInterval(async () => {
-      let latestEngagements = await peManager.getEngagements();
-      let newEngagements = peManager.compareEngagements(
-        oldEngagements,
-        latestEngagements.slice(0, 4)
-      );
-      oldEngagements = latestEngagements;
-
-      console.log(newEngagements);
-    }, 10000);
-    
+    peManager.monitor(console.log);
   } catch (error) {
     console.log('error', error);
   }

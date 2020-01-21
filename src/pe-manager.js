@@ -27,6 +27,20 @@ class ParternEngagementManager {
       engagement => !oldEngagements.includes(engagement)
     );
   }
+
+  async monitor(cb) {
+    let oldEngagements = await this.getEngagements();
+
+    setInterval(async () => {
+      let latestEngagements = await this.getEngagements();
+      let newEngagements = this.compareEngagements(
+        oldEngagements,
+        latestEngagements.slice(0, 4)
+      );
+      oldEngagements = latestEngagements;
+      cb(newEngagements);
+    }, 10000);
+  }
 }
 
 export default new ParternEngagementManager();
