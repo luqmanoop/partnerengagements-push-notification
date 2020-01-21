@@ -1,7 +1,8 @@
-import express from 'express';
 import bodyParser from 'body-parser';
+import express from 'express';
 import admin from 'firebase-admin';
 
+import peManager from './pe-manager';
 import serviceAccount from './serviceAccount.json';
 
 const app = express();
@@ -15,6 +16,14 @@ admin.initializeApp({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('public'));
+
+(async () => {
+  try {
+    await peManager.getOpenEngagements();
+  } catch (error) {
+    console.log('error', error);
+  }
+})()
 
 /**
  * Gets client (browser) token after they grant notification permission
