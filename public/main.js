@@ -25,12 +25,31 @@ function updateUIForPermission(granted) {
   }
 }
 
+function sendTokenToServer(token) {
+  fetch('/api/token/subscribe', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ token })
+  });
+}
+
 messaging
   .requestPermission()
   .then(() => {
-    updateUIForPermission(true)
+    updateUIForPermission(true);
+    return messaging.getToken();
+  })
+  .then(currentToken => {
+    if (currentToken) {
+      sendTokenToServer(currentToken);
+    } else {
+      // TODO: Show permission request
+      console.log('Show permission request');
+    }
   })
   .catch(e => {
-    updateUIForPermission(false)
+    updateUIForPermission(false);
     console.log('error', e);
   });
