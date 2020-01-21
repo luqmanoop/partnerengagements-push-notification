@@ -4,9 +4,7 @@ import cheerio from 'cheerio';
 const engagementsUrl = 'https://boards.greenhouse.io/partnerengagementstaffing';
 
 class ParternEngagementManager {
-  openEngagements = [];
-
-  async getOpenEngagements() {
+  async getEngagements() {
     return axios(engagementsUrl).then(res => {
       const { status, data } = res;
       if (status !== 200) return;
@@ -14,18 +12,21 @@ class ParternEngagementManager {
       let $ = cheerio.load(data);
       let openEngagements = [];
       $('div.opening a').each(function() {
-        let name = $(this).text();
-        let link = $(this).attr('href');
-        openEngagements.push({
-          name,
-          link
-        });
+        let engagement = $(this).text();
+        if (!engagement.toLocaleLowerCase().includes('test-testrp-')) {
+          openEngagements.push(engagement);
+        }
       });
 
-      this.openEngagements = openEngagements;
-      return this.openEngagements;
+      return openEngagements;
     });
+  }
+
+  compareEngagements(oldEngagements, latestEngagements) {
+    return latestEngagements.filter(
+      engagement => !oldEngagements.includes(engagement)
+    );
   }
 }
 
-export default new ParternEngagementManager()
+export default new ParternEngagementManager();
