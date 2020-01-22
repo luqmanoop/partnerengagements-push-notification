@@ -20,10 +20,10 @@
     "parcel-bundler": "1.12.4"
   },
   "scripts": {
-    "build": "cpy './src/serviceAccount.json' 'dist' && parcel build src/server.js --target node --no-cache",
+    "build": "parcel build src/server.js --target node --no-cache",
     "build:dev": "parcel src/server.js --target node --no-cache",
-    "dev": "nodemon --delay 1s dist --exec 'node ./dist/server.js'",
-    "start:dev": "npm run build && concurrently 'npm run build:dev' 'npm run dev'",
+    "dev": "nodemon dist --exec 'node ./dist/server.js'",
+    "start:dev": "cpy './src/serviceAccount.json' 'dist' && concurrently 'npm run build:dev' 'npm run dev'",
     "start": "node dist/server.js"
   },
   "repository": {
