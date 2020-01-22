@@ -25,6 +25,24 @@ function updateUIForPermission(granted) {
   }
 }
 
+function showNotificationGranted() {
+  let key = 'granted';
+  if (!localStorage.getItem(key)) {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js').then(() => {
+        navigator.serviceWorker.ready.then(reg => {
+          reg.showNotification('Partner Engagements Staffing', {
+            icon: '/andela-logo.png',
+            body: 'Notifications are enabled!'
+          });
+        });
+
+        localStorage.setItem(key, true);
+      });
+    }
+  }
+}
+
 function sendTokenToServer(token) {
   fetch('/api/token/subscribe', {
     method: 'POST',
@@ -39,6 +57,7 @@ messaging
   .requestPermission()
   .then(() => {
     updateUIForPermission(true);
+    showNotificationGranted();
     return messaging.getToken();
   })
   .then(currentToken => {

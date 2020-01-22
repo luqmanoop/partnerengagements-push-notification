@@ -15,12 +15,7 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.setBackgroundMessageHandler(function(payload) {
-  console.log(
-    '[firebase-messaging-sw.js] Received background message ',
-    payload
-  );
-
-  const notificationTitle = 'Partner Engagement Alert!';
+  const notificationTitle = 'Partner Engagements Staffing';
   const notificationOptions = {
     body: payload.data.message,
     icon: '/andela-logo.png',
