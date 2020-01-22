@@ -1,9 +1,10 @@
 import bodyParser from 'body-parser';
+import 'dotenv/config';
 import express from 'express';
 import admin from 'firebase-admin';
 
 import peManager from './pe-manager';
-import serviceAccount from './serviceAccount.json';
+import serviceAccount from './serviceAccount'
 
 const app = express();
 const port = process.env.PORT || 3000;

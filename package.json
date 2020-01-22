@@ -10,20 +10,23 @@
     "axios": "0.19.1",
     "body-parser": "1.19.0",
     "cheerio": "1.0.0-rc.3",
+    "dotenv": "8.2.0",
     "express": "4.17.1",
     "firebase-admin": "8.9.1"
   },
   "devDependencies": {
     "concurrently": "5.0.2",
     "cpy-cli": "3.0.0",
+    "husky": "4.2.0",
     "nodemon": "2.0.2",
-    "parcel-bundler": "1.12.4"
+    "parcel-bundler": "1.12.4",
+    "sync-dotenv": "2.4.0"
   },
   "scripts": {
     "build": "parcel build src/server.js --target node --no-cache",
     "build:dev": "parcel src/server.js --target node --no-cache",
     "dev": "nodemon dist --exec 'node ./dist/server.js'",
-    "start:dev": "cpy './src/serviceAccount.json' 'dist' && concurrently 'npm run build:dev' 'npm run dev'",
+    "start:dev": "concurrently 'npm run build:dev' 'npm run dev'",
     "start": "node dist/server.js"
   },
   "repository": {
@@ -36,5 +39,10 @@
   "bugs": {
     "url": "https://github.com/codeshifu/partnerengagements-push-notification/issues"
   },
-  "homepage": "https://github.com/codeshifu/partnerengagements-push-notification#readme"
+  "homepage": "https://github.com/codeshifu/partnerengagements-push-notification#readme",
+  "husky": {
+    "hooks": {
+      "pre-commit": "sync-dotenv"
+    }
+  }
 }
