@@ -29,17 +29,24 @@ class ParternEngagementManager {
   }
 
   async monitor(cb) {
-    let oldEngagements = await this.getEngagements();
+    try {
+      let oldEngagements = await this.getEngagements();
 
-    setInterval(async () => {
-      let latestEngagements = await this.getEngagements();
-      let newEngagements = this.compareEngagements(
-        oldEngagements,
-        latestEngagements
-      );
-      oldEngagements = latestEngagements;
-      cb(newEngagements);
-    }, 10000);
+      let handle = setInterval(async () => {
+        let latestEngagements = await this.getEngagements();
+        let newEngagements = this.compareEngagements(oldEngagements, [
+          ...latestEngagements,
+          'test'
+        ]);
+        oldEngagements = [...latestEngagements, 'test'];
+
+        cb(newEngagements);
+      }, 1000 * 120); // TODO: monitor every 1hr30mins
+
+      process.on('beforeExit', () => clearInterval(handle));
+    } catch (error) {
+      console.log('error', error);
+    }
   }
 }
 

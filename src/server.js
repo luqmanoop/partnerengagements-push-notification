@@ -7,7 +7,7 @@ import serviceAccount from './serviceAccount.json';
 
 const app = express();
 const port = process.env.PORT || 3000;
-const topic = 'partner-engagements';
+const topic = 'test-topic';
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
