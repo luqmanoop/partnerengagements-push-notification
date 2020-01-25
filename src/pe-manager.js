@@ -41,7 +41,7 @@ class ParternEngagementManager {
         oldEngagements = latestEngagements;
 
         cb(newEngagements);
-      }, 1000 * 60 * 60 * 2); // monitor every 2hrs
+      }, 1000 * 60 * 30); // monitor every 30mins
 
       process.on('beforeExit', () => clearInterval(handle));
     } catch (error) {
