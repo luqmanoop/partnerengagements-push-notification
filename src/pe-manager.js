@@ -34,14 +34,14 @@ class ParternEngagementManager {
 
       let handle = setInterval(async () => {
         let latestEngagements = await this.getEngagements();
-        let newEngagements = this.compareEngagements(oldEngagements, [
-          ...latestEngagements,
-          'test'
-        ]);
-        oldEngagements = [...latestEngagements, 'test'];
+        let newEngagements = this.compareEngagements(
+          oldEngagements,
+          latestEngagements
+        );
+        oldEngagements = latestEngagements;
 
         cb(newEngagements);
-      }, 1000 * 120); // TODO: monitor every 1hr30mins
+      }, 1000 * 60 * 60 * 2); // monitor every 2hrs
 
       process.on('beforeExit', () => clearInterval(handle));
     } catch (error) {
