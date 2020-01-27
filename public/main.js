@@ -18,8 +18,9 @@ const engagementsUrl = 'https://boards.greenhouse.io/partnerengagementstaffing';
 function updateUIForPermission(granted) {
   if (granted) {
     let html =
-      "You are on a roll!  Push notifications for new partner engagements will be sent to you. <br><strong>P.S. You don't have to visit this page to receive notifications 🙂</strong>";
-    document.body.innerHTML = html;
+      'You are on a roll!<br><strong>Push notifications for new partner engagements will be sent to you</strong>';
+    document.querySelector('div.content').innerHTML = html;
+    document.querySelector('video').style.width = 'auto';
   } else {
     document.body.textContent = "Ok! I won't send you push notifications";
   }
@@ -64,8 +65,7 @@ messaging
     if (currentToken) {
       sendTokenToServer(currentToken);
     } else {
-      // TODO: Show permission request
-      console.log('Show permission request');
+      document.body.textContent = 'Please allow notifications permission';
     }
   })
   .catch(e => {
@@ -84,7 +84,7 @@ messaging.onTokenRefresh(() => {
     });
 });
 
-// called when there's incoming notification and app is in the foreground
+// update UI when app is in foreground and there's incoming notification
 messaging.onMessage(payload => {
   const {
     data: { message }
