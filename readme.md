@@ -6,7 +6,7 @@
 I got bored visiting https://boards.greenhouse.io/partnerengagementstaffing to check for new partner engagements, because let's face it, most time you won't find anything new. I also didn't want to miss out when there's an opening that matches my skill/Eng level, so I built a web app to notify me when new engagements are opened. I hope you find it helpful too :)
 
 ## How it works
-- Polls [greehouse](https://boards.greenhouse.io/partnerengagementstaffing) every 30mins for new partner engagements
+- Polls [greenhouse](https://boards.greenhouse.io/partnerengagementstaffing) every 30mins for new partner engagements
 - Sends push notificaitons to registered clients (browsers) **ONLY** when there are new engagement openings
 
 
