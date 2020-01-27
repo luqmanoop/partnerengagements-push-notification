@@ -49,7 +49,7 @@ function sendPushNotificationsToClients(newEngagements) {
 
 /**
  * Gets client (browser) token after they grant notification permission
- * and subscribes them to a topic for future engagements
+ * and subscribes them to a topic for push messaging
  */
 app.post('/api/token/subscribe', (req, res) => {
   const { token } = req.body;
