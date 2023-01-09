@@ -12,7 +12,7 @@
     "cheerio": "1.0.0-rc.3",
     "dotenv": "8.2.0",
     "express": "4.17.1",
-    "firebase-admin": "8.9.1"
+    "firebase-admin": "11.4.1"
   },
   "devDependencies": {
     "concurrently": "5.0.2",
